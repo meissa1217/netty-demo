@@ -24,7 +24,14 @@ public class CommonTcpServer extends Thread {
 
     private static final Logger log = LoggerFactory.getLogger(CommonTcpServer.class);
 
+    /**
+     * 用于标识的名称
+     */
     private final String name;
+
+    /**
+     * 绑定的本地地址、端口
+     */
     private final InetSocketAddress addr;
 
     public CommonTcpServer(String name, InetSocketAddress addr) {

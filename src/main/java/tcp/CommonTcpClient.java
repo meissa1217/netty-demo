@@ -20,7 +20,14 @@ import java.net.InetSocketAddress;
  */
 public class CommonTcpClient extends Thread {
 
+    /**
+     * 用于标识的名称
+     */
     private final String name;
+
+    /**
+     * 连接的服务端地址、端口
+     */
     private final InetSocketAddress remoteAddr;
 
     public CommonTcpClient(String name, InetSocketAddress remoteAddr) {

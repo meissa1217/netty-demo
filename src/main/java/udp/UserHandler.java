@@ -17,7 +17,7 @@ public class UserHandler extends SimpleChannelInboundHandler<User> {
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, User msg) {
+    protected void channelRead0(ChannelHandlerContext ctx, User msg) throws Exception {
         log.info("{} - receive msg: {}", name, msg);
     }
 }

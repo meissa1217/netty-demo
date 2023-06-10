@@ -13,22 +13,43 @@ import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 
-public class SimpleUdp extends Thread {
+/**
+ * 常规 UDP 通讯示例
+ * <p>
+ * a. 使用编解码器
+ * b. 支持单播/广播
+ */
+public class CommonUdp extends Thread {
 
-    private static final Logger log = LoggerFactory.getLogger(SimpleUdp.class);
+    private static final Logger log = LoggerFactory.getLogger(CommonUdp.class);
 
+    /**
+     * 用于标识的名称
+     */
     private final String name;
+
+    /**
+     * 绑定的本地地址、端口
+     */
     private final InetSocketAddress addr;
+
+    /**
+     * 启动完成回调
+     */
     private InitListener listener;
+
+    /**
+     * 建立的 DatagramChannel
+     */
     private Channel channel;
 
-    public SimpleUdp(String name, InetSocketAddress addr) {
-        this.name = name;
-        this.addr = addr;
+    public interface InitListener {
+        void initComplete() throws Exception;
     }
 
-    public interface InitListener {
-        void initComplete();
+    public CommonUdp(String name, InetSocketAddress addr) {
+        this.name = name;
+        this.addr = addr;
     }
 
     public void addInitListener(InitListener listener) {
@@ -44,7 +65,7 @@ public class SimpleUdp extends Thread {
                     .channel(NioDatagramChannel.class)
                     .handler(new ChannelInitializer<DatagramChannel>() {
                         @Override
-                        protected void initChannel(DatagramChannel ch) {
+                        protected void initChannel(DatagramChannel ch) throws Exception {
                             ch.pipeline()
                                     .addLast(new UserDatagramEncoder())
                                     .addLast(new UserDatagramDecoder())
@@ -80,12 +101,14 @@ public class SimpleUdp extends Thread {
         final InetSocketAddress addr0 = new InetSocketAddress("127.0.0.1", 65001);
         final InetSocketAddress addr1 = new InetSocketAddress("127.0.0.1", 65002);
         final InetSocketAddress broadcastAddr = new InetSocketAddress("255.255.255.255", 65002);
-        final SimpleUdp su0 = new SimpleUdp("su0", addr0);
-        final SimpleUdp su1 = new SimpleUdp("su1", addr1);
+        final CommonUdp su0 = new CommonUdp("su0", addr0);
+        final CommonUdp su1 = new CommonUdp("su1", addr1);
         su0.addInitListener(new InitListener() {
             @Override
-            public void initComplete() {
+            public void initComplete() throws Exception {
+                // 单播
                 su0.send(new User(0L, "Romeo"), addr1);
+                // 广播
                 su0.send(new User(1L, "Juliet"), broadcastAddr);
             }
         });

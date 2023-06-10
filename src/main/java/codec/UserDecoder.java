@@ -11,12 +11,12 @@ public class UserDecoder extends ReplayingDecoder<UserDecoderState> {
     private int length;
 
     public UserDecoder() {
-        // Set the initial state.
+        // 设置初始状态
         super(UserDecoderState.READ_LENGTH);
     }
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
+    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
         switch (state()) {
             case READ_LENGTH:
                 length = in.readInt();

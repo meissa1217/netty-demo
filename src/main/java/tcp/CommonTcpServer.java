@@ -14,14 +14,20 @@ import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 
-public class SimpleTcpServer extends Thread {
+/**
+ * 常规 TCP 通讯示例 - 服务端
+ * <p>
+ * a. 使用编解码器
+ * b. 不支持自动重连
+ */
+public class CommonTcpServer extends Thread {
 
-    private static final Logger log = LoggerFactory.getLogger(SimpleTcpServer.class);
+    private static final Logger log = LoggerFactory.getLogger(CommonTcpServer.class);
 
     private final String name;
     private final InetSocketAddress addr;
 
-    public SimpleTcpServer(String name, InetSocketAddress addr) {
+    public CommonTcpServer(String name, InetSocketAddress addr) {
         this.name = name;
         this.addr = addr;
     }
@@ -36,7 +42,7 @@ public class SimpleTcpServer extends Thread {
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
-                        protected void initChannel(SocketChannel ch) {
+                        protected void initChannel(SocketChannel ch) throws Exception {
                             ch.pipeline()
                                     .addLast(new UserEncoder())
                                     .addLast(new UserServerHandler(name));
@@ -57,7 +63,7 @@ public class SimpleTcpServer extends Thread {
 
     public static void main(String[] args) {
         final InetSocketAddress addr = new InetSocketAddress("127.0.0.1", 65001);
-        final SimpleTcpServer server = new SimpleTcpServer("server", addr);
+        final CommonTcpServer server = new CommonTcpServer("server", addr);
         server.start();
     }
 }

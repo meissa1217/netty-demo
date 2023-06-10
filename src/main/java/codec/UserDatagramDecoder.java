@@ -10,7 +10,7 @@ import java.util.List;
 public class UserDatagramDecoder extends MessageToMessageDecoder<DatagramPacket> {
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, DatagramPacket packet, List<Object> out) {
+    protected void decode(ChannelHandlerContext ctx, DatagramPacket packet, List<Object> out) throws Exception {
         ByteBuf buf = packet.content();
         byte[] bytes = new byte[buf.readableBytes()];
         buf.readBytes(bytes);

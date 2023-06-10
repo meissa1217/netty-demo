@@ -12,7 +12,7 @@ import java.util.List;
 public class UserDatagramEncoder extends MessageToMessageEncoder<AddressedEnvelope<User, InetSocketAddress>> {
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, AddressedEnvelope<User, InetSocketAddress> msg, List<Object> out) {
+    protected void encode(ChannelHandlerContext ctx, AddressedEnvelope<User, InetSocketAddress> msg, List<Object> out) throws Exception {
         User user = msg.content();
         byte[] bytes = KryoSerializer.serialize(user);
         ByteBuf buf = ctx.alloc().buffer(bytes.length);

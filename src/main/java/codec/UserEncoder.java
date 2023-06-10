@@ -7,7 +7,7 @@ import io.netty.handler.codec.MessageToByteEncoder;
 public class UserEncoder extends MessageToByteEncoder<User> {
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, User msg, ByteBuf out) {
+    protected void encode(ChannelHandlerContext ctx, User msg, ByteBuf out) throws Exception {
         byte[] bytes = KryoSerializer.serialize(msg);
         int length = bytes.length;
         out.writeInt(length).writeBytes(bytes);

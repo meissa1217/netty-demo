@@ -9,6 +9,9 @@ import java.io.ByteArrayOutputStream;
 
 public class KryoSerializer {
 
+    /**
+     * Kryo 对象非线程安全
+     */
     private static final ThreadLocal<Kryo> kryoLocal = new ThreadLocal<Kryo>() {
         @Override
         protected Kryo initialValue() {

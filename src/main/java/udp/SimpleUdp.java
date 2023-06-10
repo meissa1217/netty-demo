@@ -14,14 +14,11 @@ import org.slf4j.LoggerFactory;
 import java.net.InetSocketAddress;
 
 /**
- * 常规 UDP 通讯示例
- * <p>
- * a. 使用编解码器
- * b. 支持单播/广播
+ * UDP 通讯示例
  */
-public class CommonUdp extends Thread {
+public class SimpleUdp extends Thread {
 
-    private static final Logger log = LoggerFactory.getLogger(CommonUdp.class);
+    private static final Logger log = LoggerFactory.getLogger(SimpleUdp.class);
 
     /**
      * 用于标识的名称
@@ -47,7 +44,7 @@ public class CommonUdp extends Thread {
         void initComplete() throws Exception;
     }
 
-    public CommonUdp(String name, InetSocketAddress addr) {
+    public SimpleUdp(String name, InetSocketAddress addr) {
         this.name = name;
         this.addr = addr;
     }
@@ -101,8 +98,8 @@ public class CommonUdp extends Thread {
         final InetSocketAddress addr0 = new InetSocketAddress("127.0.0.1", 65001);
         final InetSocketAddress addr1 = new InetSocketAddress("127.0.0.1", 65002);
         final InetSocketAddress broadcastAddr = new InetSocketAddress("255.255.255.255", 65002);
-        final CommonUdp su0 = new CommonUdp("su0", addr0);
-        final CommonUdp su1 = new CommonUdp("su1", addr1);
+        final SimpleUdp su0 = new SimpleUdp("su0", addr0);
+        final SimpleUdp su1 = new SimpleUdp("su1", addr1);
         su0.addInitListener(new InitListener() {
             @Override
             public void initComplete() throws Exception {

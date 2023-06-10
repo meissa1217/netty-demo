@@ -15,14 +15,11 @@ import org.slf4j.LoggerFactory;
 import java.net.InetSocketAddress;
 
 /**
- * 常规 TCP 通讯示例 - 服务端
- * <p>
- * a. 使用编解码器
- * b. 不支持自动重连
+ * TCP 通讯示例 - 服务端
  */
-public class CommonTcpServer extends Thread {
+public class SimpleTcpServer extends Thread {
 
-    private static final Logger log = LoggerFactory.getLogger(CommonTcpServer.class);
+    private static final Logger log = LoggerFactory.getLogger(SimpleTcpServer.class);
 
     /**
      * 用于标识的名称
@@ -34,7 +31,7 @@ public class CommonTcpServer extends Thread {
      */
     private final InetSocketAddress addr;
 
-    public CommonTcpServer(String name, InetSocketAddress addr) {
+    public SimpleTcpServer(String name, InetSocketAddress addr) {
         this.name = name;
         this.addr = addr;
     }
@@ -70,7 +67,7 @@ public class CommonTcpServer extends Thread {
 
     public static void main(String[] args) {
         final InetSocketAddress addr = new InetSocketAddress("127.0.0.1", 65001);
-        final CommonTcpServer server = new CommonTcpServer("server", addr);
+        final SimpleTcpServer server = new SimpleTcpServer("server", addr);
         server.start();
     }
 }

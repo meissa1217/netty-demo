@@ -13,12 +13,9 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import java.net.InetSocketAddress;
 
 /**
- * 常规 TCP 通讯示例 - 客户端
- * <p>
- * a. 使用编解码器
- * b. 不支持自动重连
+ * TCP 通讯示例 - 客户端
  */
-public class CommonTcpClient extends Thread {
+public class SimpleTcpClient extends Thread {
 
     /**
      * 用于标识的名称
@@ -30,7 +27,7 @@ public class CommonTcpClient extends Thread {
      */
     private final InetSocketAddress remoteAddr;
 
-    public CommonTcpClient(String name, InetSocketAddress remoteAddr) {
+    public SimpleTcpClient(String name, InetSocketAddress remoteAddr) {
         this.name = name;
         this.remoteAddr = remoteAddr;
     }
@@ -62,7 +59,7 @@ public class CommonTcpClient extends Thread {
 
     public static void main(String[] args) {
         final InetSocketAddress remoteAddr = new InetSocketAddress("127.0.0.1", 65001);
-        final CommonTcpClient client = new CommonTcpClient("client", remoteAddr);
+        final SimpleTcpClient client = new SimpleTcpClient("client", remoteAddr);
         client.start();
     }
 }
